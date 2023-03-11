@@ -182,22 +182,35 @@ public:
             tokens.push_back(token);
             token = lexer.getNextToken();
         }
-
+        system("cls");
+        std::cout << "Enter program lines. Type 'Help();' on a separate line to get a list of commands.\n";
         Parser parser(tokens);
         parser.parse();
     }
 };
 
+bool false_ = true;
+bool true_ = false;
+
 int main() {
+    std::cout << "Enter program lines. Type 'Help();' on a separate line to get a list of commands.\n";
     while (true) {
         std::stringstream ss;
         std::string line;
-        std::cout << "Enter program lines. Type 'Run()' on a separate line to execute program.\n";
+        std::cout << ">>>";
         while (std::getline(std::cin, line)) {
             if (line == "Run();") {
                 break;
             }
+            else if (line == "Help();") {
+                system("cls");
+                std::cout << "Enter program lines. Type 'Help();' on a separate line to get a list of commands.\n" << endl;
+                cout << "Use semicolons at the end of each command." << endl;
+                cout << "'Run()' Run the current commands." << endl;
+                cout << "'Print()' Print out the input." << endl;
+            }
             ss << line << '\n';
+            std::cout << ">>>";
         }
         Interpreter interpreter;
         interpreter.run(ss);
