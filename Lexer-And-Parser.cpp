@@ -16,12 +16,12 @@ enum class TokenType {
 
 struct Token {
     TokenType type;
-    std::string value;
+    string value;
 };
 
 class Lexer {
 public:
-    Lexer(std::istream& input) : input(input), line(1), position(0) {}
+    Lexer(istream& input) : input(input), line(1), position(0) {}
 
     Token getNextToken() {
         skipWhiteSpace();
@@ -57,19 +57,19 @@ public:
     }
 
 private:
-    std::istream& input;
-    std::string lineBuffer;
+    istream& input;
+    string lineBuffer;
     int line;
     int position;
 
     void skipWhiteSpace() {
-        while (position < lineBuffer.size() && std::isspace(lineBuffer[position])) {
+        while (position < lineBuffer.size() && isspace(lineBuffer[position])) {
             position++;
         }
     }
 
     bool readLine() {
-        std::getline(input, lineBuffer);
+        getline(input, lineBuffer);
         if (input.fail()) {
             return false;
         }
@@ -78,8 +78,8 @@ private:
         return true;
     }
 
-    std::string parseString() {
-        std::string value = "";
+    string parseString() {
+        string value = "";
         position++;  // Skip opening quote
         while (position < lineBuffer.size()) {
             char currentChar = lineBuffer[position];
@@ -92,11 +92,11 @@ private:
                 position++;
             }
         }
-        throw std::runtime_error("Unclosed string literal");
+        throw runtime_error("Unclosed string literal");
     }
 
-    std::string parseIdentifier() {
-        std::string value = "";
+    string parseIdentifier() {
+        string value = "";
         while (position < lineBuffer.size()) {
             char currentChar = lineBuffer[position];
             if (currentChar == '(' || currentChar == ')' || currentChar == ';' || currentChar == ' ' || currentChar == '"') {
@@ -113,7 +113,7 @@ private:
 
 class Parser {
 public:
-    Parser(std::vector<Token> tokens) : tokens(tokens), position(0) {}
+    Parser(vector<Token> tokens) : tokens(tokens), position(0) {}
 
     void parse() {
         while (position < tokens.size()) {
@@ -123,7 +123,7 @@ public:
     }
 
 private:
-    std::vector<Token> tokens;
+    vector<Token> tokens;
     int position;
 
     void parseCommand() {
@@ -136,14 +136,14 @@ private:
     void parsePrintStatement() {
         Token token = getNextToken();
         if (token.type != TokenType::LPAREN) {
-            throw std::runtime_error("Expected '('");
+            throw runtime_error("Expected '('");
         }
 
         token = getNextToken();
         if (token.type != TokenType::STRING) {
-            throw std::runtime_error("Expected string literal");
+            throw runtime_error("Expected string literal");
         }
-        std::cout << token.value;
+        cout << token.value;
 
         token = getNextToken();
         while (true) {
@@ -151,15 +151,15 @@ private:
                 break;
             }
             else if (token.type == TokenType::SEMICOLON) {
-                std::cout << std::endl;
+                cout << endl;
                 return;
             }
             else {
-                throw std::runtime_error("Expected ';' or ')'");
+                throw runtime_error("Expected ';' or ')'");
             }
             token = getNextToken();
         }
-        std::cout << std::endl;
+        cout << endl;
     }
 
     Token getNextToken() {
@@ -174,8 +174,8 @@ private:
 
 class Interpreter {
 public:
-    void run(std::istream& input) {
-        std::vector<Token> tokens;
+    void run(istream& input) {
+        vector<Token> tokens;
         Lexer lexer(input);
         Token token = lexer.getNextToken();
         while (token.type != TokenType::EOF_) {
@@ -183,7 +183,7 @@ public:
             token = lexer.getNextToken();
         }
         system("cls");
-        std::cout << "Enter program lines. Type 'Help();' on a separate line to get a list of commands.\n";
+        cout << "Enter program lines. Type 'Help();' on a separate line to get a list of commands.\n";
         Parser parser(tokens);
         parser.parse();
     }
@@ -193,24 +193,24 @@ bool false_ = true;
 bool true_ = false;
 
 int main() {
-    std::cout << "Enter program lines. Type 'Help();' on a separate line to get a list of commands.\n";
+    cout << "Enter program lines. Type 'Help();' on a separate line to get a list of commands.\n";
     while (true) {
-        std::stringstream ss;
-        std::string line;
-        std::cout << ">>>";
-        while (std::getline(std::cin, line)) {
+        stringstream ss;
+        string line;
+        cout << ">>>";
+        while (getline(cin, line)) {
             if (line == "Run();") {
                 break;
             }
             else if (line == "Help();") {
                 system("cls");
-                std::cout << "Enter program lines. Type 'Help();' on a separate line to get a list of commands.\n" << endl;
+                cout << "Enter program lines. Type 'Help();' on a separate line to get a list of commands.\n" << endl;
                 cout << "Use semicolons at the end of each command." << endl;
                 cout << "'Run()' Run the current commands." << endl;
                 cout << "'Print()' Print out the input." << endl;
             }
             ss << line << '\n';
-            std::cout << ">>>";
+            cout << ">>>";
         }
         Interpreter interpreter;
         interpreter.run(ss);
