@@ -1,2 +1,2 @@
-# Lexer-And-Parser
-A simple Lexer and Parser designed in C++.
+# NovaScript
+A very early work in progress scripting language with a basic C style syntax.
