@@ -1,0 +1,5 @@
+/home/bumpscosity/repos/NovaScript/build/CMakeFiles/nova.dir
+/home/bumpscosity/repos/NovaScript/build/CMakeFiles/debug.dir
+/home/bumpscosity/repos/NovaScript/build/CMakeFiles/clean-all.dir
+/home/bumpscosity/repos/NovaScript/build/CMakeFiles/edit_cache.dir
+/home/bumpscosity/repos/NovaScript/build/CMakeFiles/rebuild_cache.dir
