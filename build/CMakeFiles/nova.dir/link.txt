@@ -1,1 +1,0 @@
-clang -g CMakeFiles/nova.dir/src/lex.yy.c.o CMakeFiles/nova.dir/src/main.c.o CMakeFiles/nova.dir/src/parser.tab.c.o CMakeFiles/nova.dir/src/utils.c.o -o /home/bumpscosity/repos/NovaScript/nova   -L/home/bumpscosity/repos/NovaScript/include 
